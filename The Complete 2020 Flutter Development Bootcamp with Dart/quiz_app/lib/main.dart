@@ -15,7 +15,7 @@ class Quizzler extends StatelessWidget {
         backgroundColor: Colors.grey.shade900,
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
             child: QuizPage(),
           ),
         ),
@@ -30,29 +30,16 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  //////////////////////////////////////////////////
-  List<Widget> scoreKeeper = [
-    Icon(
-      Icons.check,
-      color: Colors.green,
-    ),
-    Icon(
-      Icons.close,
-      color: Colors.red,
-    ),
-    Icon(
-      Icons.close,
-      color: Colors.red,
-    ),
-    Icon(
-      Icons.close,
-      color: Colors.red,
-    ),
-    Icon(
-      Icons.close,
-      color: Colors.red,
-    ),
+  List<Icon> scorekeeper = [];
+  List<String> question = [
+    'You can lead a cow down stairs but not up stairs.',
+    'Approximately one quarter of human bones are in the feet.',
+    'A slug\'s blood is green.',
   ];
+
+  int questionNumber = 0;
+
+  List<bool> answer = [false, true, true];
 
   @override
   Widget build(BuildContext context) {
@@ -66,10 +53,10 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                'This is where the question text will go.',
+                question[questionNumber],
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 25.0,
+                  fontSize: 25,
                   color: Colors.white,
                 ),
               ),
@@ -78,29 +65,32 @@ class _QuizPageState extends State<QuizPage> {
         ),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(15.0),
             child: FlatButton(
               color: Colors.green,
               textColor: Colors.white,
               child: Text(
                 'True',
                 style: TextStyle(
+                  fontSize: 25,
                   color: Colors.white,
-                  fontSize: 20,
                 ),
               ),
               onPressed: () {
+                bool Correctanswer = answer[questionNumber];
+
+                if (Correctanswer == true) {
+                  print("the user got right");
+                } else {
+                  print("the user got wrong");
+                }
+
                 // the user picked true
-                setState(
-                  () {
-                    scoreKeeper.add(
-                      Icon(
-                        Icons.check,
-                        color: Colors.green,
-                      ),
-                    ); // * set state triggers a rebuild.
-                  },
-                );
+
+                setState(() {
+                  questionNumber++;
+                  print(questionNumber);
+                });
               },
             ),
           ),
@@ -109,24 +99,41 @@ class _QuizPageState extends State<QuizPage> {
           child: Padding(
             padding: EdgeInsets.all(15.0),
             child: FlatButton(
+              textColor: Colors.white,
               color: Colors.red,
               child: Text(
-                "False",
-                style: TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.white,
-                ),
+                'False',
+                style: TextStyle(fontSize: 25.0, color: Colors.white),
               ),
               onPressed: () {
-                // the user picked false
+                // the user press false
+
+                bool Correctanswer = answer[questionNumber];
+
+                if (Correctanswer == true) {
+                  print("the user got right");
+                } else {
+                  print("the user got wrong");
+                }
+
+                setState(() {
+                  questionNumber++;
+                  print(questionNumber);
+                });
               },
             ),
           ),
         ),
         Row(
-          children: scoreKeeper,
+          children: scorekeeper,
         )
       ],
     );
   }
 }
+
+/*
+question1: 'You can lead a cow down stairs but not up stairs.', false,
+question2: 'Approximately one quarter of human bones are in the feet.', true,
+question3: 'A slug\'s blood is green.', true,
+*/
