@@ -3,13 +3,16 @@
 // TODO *  display the question
 // TODO * checking the user answers.....
 // TODO * creating questing classes......
-
+// TODO * first pillar of OOPs ABSTRACTION
 import 'package:flutter/material.dart';
-import 'question.dart';
+
+import 'quiz_brain.dart';
 
 void main() {
   runApp(Quizzler());
 }
+
+Quizbrain quizbrain = Quizbrain();
 
 class Quizzler extends StatelessWidget {
   @override
@@ -44,14 +47,6 @@ class _QuizPageState extends State<QuizPage> {
   List<Icon> scorekeeper = [];
 //   List<bool> answer = [false, true, true];
 
-  List<Question> questionBank = [
-    Question(q: 'You can lead a cow down stairs but not up stairs.', a: false),
-    Question(
-        q: 'Approximately one quarter of human bones are in the feet.',
-        a: true),
-    Question(q: 'A slug\'s blood is green.', a: true)
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -65,7 +60,7 @@ class _QuizPageState extends State<QuizPage> {
             child: Center(
               // ! our text widget needs string..... so we need to a question part questiontext
               child: Text(
-                questionBank[questionNumber].questiontext,
+                quizbrain.getQuestionText(questionNumber),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25,
@@ -90,8 +85,10 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 // ! our text widget needs string..... so we need to a question part questiontext
-                bool correctanswer =
-                    questionBank[questionNumber].questionanswer;
+
+                // quizbrain.questionBank[questionNumber].questionAnswer = true;
+
+                bool correctanswer = quizbrain.getAnswer(questionNumber);
 
                 if (correctanswer == true) {
                   print("the user got right");
@@ -122,8 +119,7 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 // the user press false
 
-                bool correctanswer =
-                    questionBank[questionNumber].questionanswer;
+                bool correctanswer = quizbrain.getAnswer(questionNumber);
 
                 if (correctanswer == false) {
                   print("the user got right");
