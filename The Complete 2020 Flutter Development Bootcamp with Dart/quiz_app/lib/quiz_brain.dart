@@ -1,6 +1,9 @@
 import 'question.dart';
 
 class Quizbrain {
+  // ! making it private because we don't wanna crash our app out of questions....
+  int _questionNumber = 0;
+
   List<Question> _questionBank = [
     Question(q: 'Some cats are actually allergic to humans', a: true),
     Question(q: 'You can lead a cow down stairs but not up stairs.', a: false),
@@ -31,11 +34,22 @@ class Quizbrain {
         a: true),
   ];
 
-  String getQuestionText(int questionNumber) {
-    return _questionBank[questionNumber].questiontext;
+  void nextQuestion() {
+    if (_questionNumber < _questionBank.length - 1) {
+      //! we are decrementing the length to stop in before the app crashes....  it doesn't move to the next index and it crashes...
+      _questionNumber++;
+      print(_questionNumber);
+      print(_questionBank);
+    }
   }
 
-  bool getAnswer(int questionNumber) {
-    return _questionBank[questionNumber].questionanswer;
+  String getQuestionText() {
+    return _questionBank[_questionNumber].questiontext;
+  }
+
+  // ! we don't need to have a parameter of it. it is in our class method we can actually access it...
+  // ! in the main file it doesn't need an input of question bank we are specifing it her in the quizbrain file........
+  bool getAnswer() {
+    return _questionBank[_questionNumber].questionanswer;
   }
 }

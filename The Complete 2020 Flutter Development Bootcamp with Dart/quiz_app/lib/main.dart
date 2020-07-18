@@ -43,7 +43,6 @@ class _QuizPageState extends State<QuizPage> {
 //     'A slug\'s blood is green.',
 //   ];
 
-  int questionNumber = 0;
   List<Icon> scorekeeper = [];
 //   List<bool> answer = [false, true, true];
 
@@ -60,7 +59,7 @@ class _QuizPageState extends State<QuizPage> {
             child: Center(
               // ! our text widget needs string..... so we need to a question part questiontext
               child: Text(
-                quizbrain.getQuestionText(questionNumber),
+                quizbrain.getQuestionText(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25,
@@ -88,7 +87,7 @@ class _QuizPageState extends State<QuizPage> {
 
                 // quizbrain.questionBank[questionNumber].questionAnswer = true;
 
-                bool correctanswer = quizbrain.getAnswer(questionNumber);
+                bool correctanswer = quizbrain.getAnswer();
 
                 if (correctanswer == true) {
                   print("the user got right");
@@ -99,8 +98,7 @@ class _QuizPageState extends State<QuizPage> {
                 // the user picked true
 
                 setState(() {
-                  questionNumber++;
-                  print(questionNumber);
+                  quizbrain.nextQuestion();
                 });
               },
             ),
@@ -118,8 +116,8 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 // the user press false
-
-                bool correctanswer = quizbrain.getAnswer(questionNumber);
+                // get answer  no longer needs an input..
+                bool correctanswer = quizbrain.getAnswer();
 
                 if (correctanswer == false) {
                   print("the user got right");
@@ -128,8 +126,7 @@ class _QuizPageState extends State<QuizPage> {
                 }
 
                 setState(() {
-                  questionNumber++;
-                  print(questionNumber);
+                  quizbrain.nextQuestion();
                 });
               },
             ),
