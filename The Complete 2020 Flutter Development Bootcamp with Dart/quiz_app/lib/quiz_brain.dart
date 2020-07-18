@@ -52,4 +52,17 @@ class Quizbrain {
   bool getAnswer() {
     return _questionBank[_questionNumber].questionanswer;
   }
+
+  bool gotgold() {
+    if (_questionNumber >= _questionBank.length - 1) {
+      print('gotted there');
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void reset() {
+    _questionNumber = 0;
+  }
 }

@@ -4,8 +4,13 @@
 // TODO * checking the user answers.....
 // TODO * creating questing classes......
 // TODO * first pillar of OOPs ABSTRACTION
-import 'package:flutter/material.dart';
+// TODO *  abstraction
+// TODO * encapsulation
+// TODO * inheritance'
+// TODO * polymorphism..
 
+import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'quiz_brain.dart';
 
 void main() {
@@ -45,6 +50,40 @@ class _QuizPageState extends State<QuizPage> {
 
   List<Icon> scorekeeper = [];
 //   List<bool> answer = [false, true, true];
+
+  void checkAnswer(bool userPickAnswer) {
+    // the user press false
+    // get answer  no longer needs an input..
+    bool correctanswer = quizbrain.getAnswer();
+    // ! added the setstate too the if else statement because we wanna update the user press the icon......
+    setState(() {
+      if (quizbrain.gotgold() == true) {
+        //Modified for our purposes:
+        Alert(
+          context: context,
+          title: 'Finished!',
+          desc: 'The quiz got ENDED',
+        ).show();
+
+        quizbrain.reset();
+
+        scorekeeper = [];
+      } else {
+        if (userPickAnswer == correctanswer) {
+          scorekeeper.add(Icon(
+            Icons.check,
+            color: Colors.green,
+          ));
+        } else {
+          scorekeeper.add(Icon(
+            Icons.close,
+            color: Colors.red,
+          ));
+        }
+        quizbrain.nextQuestion();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,19 +126,21 @@ class _QuizPageState extends State<QuizPage> {
 
                 // quizbrain.questionBank[questionNumber].questionAnswer = true;
 
-                bool correctanswer = quizbrain.getAnswer();
+                // bool correctanswer = quizbrain.getAnswer();
 
-                if (correctanswer == true) {
-                  print("the user got right");
-                } else {
-                  print("the user got wrong");
-                }
+                // if (correctanswer == true) {
+                //   print("the user got right");
+                // } else {
+                //   print("the user got wrong");
+                // }
 
-                // the user picked true
+                // // the user picked true
 
-                setState(() {
-                  quizbrain.nextQuestion();
-                });
+                // setState(() {
+                //   quizbrain.nextQuestion();
+                // });
+
+                checkAnswer(true);
               },
             ),
           ),
@@ -115,19 +156,7 @@ class _QuizPageState extends State<QuizPage> {
                 style: TextStyle(fontSize: 25.0, color: Colors.white),
               ),
               onPressed: () {
-                // the user press false
-                // get answer  no longer needs an input..
-                bool correctanswer = quizbrain.getAnswer();
-
-                if (correctanswer == false) {
-                  print("the user got right");
-                } else {
-                  print("the user got wrong");
-                }
-
-                setState(() {
-                  quizbrain.nextQuestion();
-                });
+                checkAnswer(false);
               },
             ),
           ),
